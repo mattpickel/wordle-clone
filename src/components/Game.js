@@ -2,10 +2,10 @@ import React from "react";
 import GameBoard from "./GameBoard";
 import Keyboard from "./Keyboard";
 
-function Game() {
+function Game(props) {
     return (
         <div className="game-container">
-            <GameBoard />
+            <GameBoard currentLetter={props.currentLetter} currentInput={props.currentInput} currentGuess={props.currentInput.currentGuess}/>
             <Keyboard />
         </div>
     )

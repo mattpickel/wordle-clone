@@ -4,7 +4,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
-function Header() {
+function Header(props) {
     return (
         <header>
             <div className="button-box">
@@ -13,6 +13,7 @@ function Header() {
                 </button>
             </div>
             <h1>Wordle</h1>
+            <h1>{props.currentGuess}</h1>
             <div className="button-box button-box-right">
                 <button>
                     <HelpOutlineIcon />
