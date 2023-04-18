@@ -4,11 +4,15 @@ import Game from "./Game";
 
 function App() {
   const [currentInput, setCurrentInput] = useState({
-    currentLetter: "",
-    currentGuess: "",
-    currentKey: "",
+    currentGuess: [],
     currentGuessNumber: 1
   });
+
+  // const [currentInput, setCurrentInput] = useState({
+  //   round: 1,
+  //   currentKey: "",
+  //   guesses: [],
+  // })
 
   const [guessNumber, setGuessNumber] = useState(1);
 
@@ -21,18 +25,14 @@ function App() {
         setCurrentInput((prevValue) => {
           if (prevValue.currentGuess.length < 5) {            
             return {
-              currentLetter: value,
               currentGuess: [...prevValue.currentGuess, value],
-              currentKey: event.key,
               currentGuessNumber: prevValue.currentGuessNumber
             }
           } else {
             var newArray = prevValue.currentGuess;
             newArray[4] = value;
             return {
-              currentLetter: value,
               currentGuess: newArray,
-              currentKey: event.key,
               currentGuessNumber: prevValue.currentGuessNumber
             }
           }
@@ -44,14 +44,11 @@ function App() {
           console.log(prevValue.currentGuess[-2]);
           if (prevValue.currentGuess.length > 1) {
             return {
-              currentLetter: prevValue.currentGuess[prevValue.currentGuess.length-2],
               currentGuess: prevValue.currentGuess.slice(0, -1),
-              currentKey: event.key,
               currentGuessNumber: prevValue.currentGuessNumber
             }
           } else if (prevValue.currentGuess.length <= 1) {
             return {
-              currentLetter: "",
               currentGuess: [],
               currentKey: event.key,
               currentGuessNumber: prevValue.currentGuessNumber
@@ -66,9 +63,7 @@ function App() {
             return prevValue;
           } else if (prevValue.currentGuess.length === 5) {
             return {
-              currentLetter: "",
               currentGuess: [],
-              currentKey: event.key,
               currentGuessNumber: prevValue.currentGuessNumber + 1
             }
           }
@@ -90,7 +85,7 @@ function App() {
   return (
     <div className="App">
       <Header currentGuess={currentInput.currentGuess}/>
-      <Game currentLetter={currentInput.currentLetter} currentInput={currentInput}/>
+      <Game currentInput={currentInput}/>
     </div>
   );
 }

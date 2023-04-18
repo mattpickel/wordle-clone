@@ -5,7 +5,7 @@ import Keyboard from "./Keyboard";
 function Game(props) {
     return (
         <div className="game-container">
-            <GameBoard currentLetter={props.currentLetter} currentInput={props.currentInput} currentGuess={props.currentInput.currentGuess}/>
+            <GameBoard currentInput={props.currentInput}/>
             <Keyboard />
         </div>
     )
