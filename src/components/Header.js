@@ -13,7 +13,6 @@ function Header(props) {
                 </button>
             </div>
             <h1>Wordle</h1>
-            <h1>{props.currentGuess}</h1>
             <div className="button-box button-box-right">
                 <button>
                     <HelpOutlineIcon />

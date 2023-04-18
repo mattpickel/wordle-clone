@@ -5,7 +5,8 @@ import Game from "./Game";
 function App() {
   const [currentInput, setCurrentInput] = useState({
     currentGuess: [],
-    currentGuessNumber: 1
+    currentGuessNumber: 1,
+    guesses: [[[]],[[]],[[]],[[]],[[]],[[]]]
   });
 
   // const [currentInput, setCurrentInput] = useState({
@@ -23,35 +24,47 @@ function App() {
       if (event.keyCode >= 65 && event.keyCode <= 90) {
         const value = event.key.toUpperCase();  
         setCurrentInput((prevValue) => {
-          if (prevValue.currentGuess.length < 5) {            
+          if (prevValue.currentGuess.length < 5) {         
+            var newGuess = [...prevValue.currentGuess, value];
+            var newGuesses = prevValue.guesses;
+            newGuesses[prevValue.currentGuessNumber - 1] = newGuess;   
             return {
-              currentGuess: [...prevValue.currentGuess, value],
-              currentGuessNumber: prevValue.currentGuessNumber
+              currentGuess: newGuess,
+              currentGuessNumber: prevValue.currentGuessNumber,
+              guesses: newGuesses
             }
           } else {
-            var newArray = prevValue.currentGuess;
-            newArray[4] = value;
+            var newGuess = prevValue.currentGuess;
+            newGuess[4] = value;
+            var newGuesses = prevValue.guesses;
+            newGuesses[prevValue.currentGuessNumber - 1] = newGuess;
             return {
-              currentGuess: newArray,
-              currentGuessNumber: prevValue.currentGuessNumber
+              currentGuess: newGuess,
+              currentGuessNumber: prevValue.currentGuessNumber,
+              guesses: newGuesses
             }
           }
         });
       // Handle Backspace
       } else if (event.keyCode === 8) {
         setCurrentInput((prevValue) => {
-          console.log(prevValue.currentGuess);
-          console.log(prevValue.currentGuess[-2]);
           if (prevValue.currentGuess.length > 1) {
+            var newGuess = prevValue.currentGuess.slice(0, -1);
+            var newGuesses = prevValue.guesses;
+            newGuesses[prevValue.currentGuessNumber - 1] = newGuess;
             return {
-              currentGuess: prevValue.currentGuess.slice(0, -1),
-              currentGuessNumber: prevValue.currentGuessNumber
+              currentGuess: newGuess,
+              currentGuessNumber: prevValue.currentGuessNumber,
+              guesses: newGuesses
             }
           } else if (prevValue.currentGuess.length <= 1) {
+            var newGuesses = prevValue.guesses;
+            newGuesses[prevValue.currentGuessNumber - 1] = [];
             return {
               currentGuess: [],
               currentKey: event.key,
-              currentGuessNumber: prevValue.currentGuessNumber
+              currentGuessNumber: prevValue.currentGuessNumber,
+              guesses: newGuesses
             }
           }
         })       
@@ -62,9 +75,12 @@ function App() {
           if (prevValue.currentGuess.length < 5) {
             return prevValue;
           } else if (prevValue.currentGuess.length === 5) {
+            var newGuesses = prevValue.guesses;
+            newGuesses[prevValue.currentGuessNumber - 1] = prevValue.currentGuess;
             return {
               currentGuess: [],
-              currentGuessNumber: prevValue.currentGuessNumber + 1
+              currentGuessNumber: prevValue.currentGuessNumber + 1,
+              guesses: newGuesses
             }
           }
         });
