@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Game from "./Game";
+import { answers } from "../data";
 
 function App() {
   const [currentInput, setCurrentInput] = useState({
@@ -9,15 +10,68 @@ function App() {
     guesses: [[[]],[[]],[[]],[[]],[[]],[[]]]
   });
 
-  // const [currentInput, setCurrentInput] = useState({
-  //   round: 1,
-  //   currentKey: "",
-  //   guesses: [],
-  // })
+  const [gameTileStates, setGameTileStates] = useState({
+    tileStates: [
+    ['grey', 'grey', 'grey', 'grey', 'grey'],
+    ['grey', 'grey', 'grey', 'grey', 'grey'],
+    ['grey', 'grey', 'grey', 'grey', 'grey'],
+    ['grey', 'grey', 'grey', 'grey', 'grey'],
+    ['grey', 'grey', 'grey', 'grey', 'grey'],
+    ['grey', 'grey', 'grey', 'grey', 'grey']
+    ],
+    round: 0
+  })
 
-  const [guessNumber, setGuessNumber] = useState(1);
+  var answer = answers[0].toUpperCase();
 
-  // Add an event listener to the document to capture keystrokes for player guess. 
+  // Function is called when return/enter key pressed w/ 5 letters in the current guess. Returns array of green/yellow/grey strings to be delivered to game row tiles.
+  function guessSubmit(guess, answer) {
+    const result = []
+    const answerArray = answer.split("");
+    const unguessedLetters = [...answerArray];
+    const tempGuess = [...guess];
+
+    // Find all green letters
+    for (let i = 0; i < 5; i++) {
+      if (guess[i] === answerArray[i]) {
+        result.push('green');
+        unguessedLetters[i] = "";
+        tempGuess[i] = ""; // Update tempGuessArray
+      } else {
+        result.push(""); // Reserve space for later
+      }
+    }
+
+    // Find all the yellow letters
+    for (let i = 0; i < 5; i++) {
+      if (tempGuess[i] !== "" && unguessedLetters.includes(tempGuess[i])) {
+        result[i] = ('yellow');
+        unguessedLetters[unguessedLetters.indexOf(guess[i])] = "";
+      } else if (result[i] === "") {
+        result[i] = ('grey')
+      }
+    }
+
+    setGameTileStates((prevValue) => {
+      console.log('test');
+      var newStates = prevValue.tileStates;
+      newStates[prevValue.round] = result;
+      console.log(newStates[prevValue.round]);
+      const newRound = prevValue.round + 1;
+      return {
+        tileStates: newStates,
+        round: newRound
+      }
+    })
+
+    console.log(result);
+    console.log(unguessedLetters);
+  }
+
+ 
+
+  // Key handler for handling player input. If letter, added to current guess. If backspace, delete last character from current guess. 
+  // If return/enter, submit guess if 5 letters and increase currentGuessNumber. The array of guesses is maintained accordingly. 
   useEffect(() => {
     function handleKeyDown(event) {    
       // Only capture keystroke if it is a letter. When captured, add it to the current guess. If it is a backspace, remove the previous letter that was guessed.    
@@ -71,6 +125,9 @@ function App() {
         console.log("Delete last letter");
       // Handle enter/submission
       } else if (event.keyCode === 13) {
+        if (currentInput.currentGuess.length === 5) {
+          guessSubmit(currentInput.currentGuess, answer);
+        }
         setCurrentInput((prevValue) => {
           if (prevValue.currentGuess.length < 5) {
             return prevValue;
@@ -94,13 +151,13 @@ function App() {
     return function cleanup() {
       document.removeEventListener('keydown', handleKeyDown);
     }
-  }, []);
+  }, [currentInput]);
 
   
 
   return (
     <div className="App">
-      <Header currentGuess={currentInput.currentGuess}/>
+      <Header />
       <Game currentInput={currentInput}/>
     </div>
   );

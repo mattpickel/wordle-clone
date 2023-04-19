@@ -4,4 +4,6 @@ const keyboardSecondRow = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'];
 
 const keyboardThirdTow = ['ENTER', 'z', 'x', 'c', 'v', 'b', 'n', 'm', 'DEL'];
 
-export {keyboardFirstRow, keyboardSecondRow, keyboardThirdTow}
+const answers = ["atest"];
+
+export {keyboardFirstRow, keyboardSecondRow, keyboardThirdTow, answers}
