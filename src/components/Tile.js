@@ -1,8 +1,9 @@
 import React from "react";
 
 function Tile(props) {
+    const className = "tile " + props.tileState;
     return (
-        <div className="tile">
+        <div className={className}>
             {props.letter}
         </div>
     )

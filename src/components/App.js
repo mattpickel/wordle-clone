@@ -5,7 +5,7 @@ import { answers } from "../data";
 
 function App() {
   const initialGuesses = Array.from({ length: 6 }, () => []);
-  const initialTileStates = Array.from({ length: 6 }, () => Array(5).fill('grey'));
+  const initialTileStates = Array.from({ length: 6 }, () => Array(5).fill(''));
 
   // Initialize state variables
   const [currentInput, setCurrentInput] = useState({
@@ -112,11 +112,11 @@ function App() {
   // Call function based on keystroke
   function handleKeyDown(event) {
     const { keyCode } = event;
-    if (keyCode >= 65 && keyCode <= 90) {
+    if (keyCode >= 65 && keyCode <= 90) { // If letter
       handleLetterInput(event.key.toUpperCase());
-    } else if (keyCode === 8) {
+    } else if (keyCode === 8) { // If backspace
       handleBackspace();
-    } else if (keyCode === 13) {
+    } else if (keyCode === 13) { // If enter/return
       handleEnter();
     }
   }

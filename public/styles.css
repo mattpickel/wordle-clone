@@ -3,7 +3,8 @@
   --secondary-color: rgb(58, 58, 60);
   --light-color: rgb(129, 131, 132);
   --white-color: rgb(255, 255, 255);
-
+  --green-color: rgb(83, 141, 78);
+  --yellow-color: rgb(181, 159, 59);
 }
 
 body {
@@ -106,6 +107,21 @@ header .button-box * {
   font-family: 'Libre Franklin', sans-serif;
   font-size: 1.7rem;
   font-weight: bold;
+}
+
+.tile.yellow {
+  border: 2px solid var(--yellow-color);
+  background-color: var(--yellow-color);
+}
+
+.tile.green {
+  border: 2px solid var(--green-color);
+  background-color: var(--green-color);
+}
+
+.tile.grey {
+  border: 2px solid var(--secondary-color);
+  background-color: var(--secondary-color);
 }
 
 /* Keyboard Classes */
