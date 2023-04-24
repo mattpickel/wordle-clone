@@ -61,6 +61,41 @@ header .button-box * {
 }
 
 /* Class Styling */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 30%;
+  z-index: 2;
+}
+
+.modal-content {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid var(--secondary-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.gameover-button {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border-radius: 4px;
+  border: 2px solid var(--secondary-color);
+  box-shadow: none;
+  font: inherit;
+  padding: 10px;
+}
+
+.gameover-button:hover {
+  background-color: var(--secondary-color);
+}
 
 /* Game Board Classes */
 .game-container {

@@ -19,8 +19,38 @@ function App() {
     round: 0
   })
 
+  const [wonGame, setWonGame] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+
+  // Set answer for game
   const answer = answers[0].toUpperCase();
 
+  // Restart the game
+  function restartGame() {
+    console.log('restart game');
+    setWonGame(false);
+    setGameOver(false);
+    setGameTileStates({
+      tileStates: initialTileStates,
+      round: 0
+    });
+    setCurrentInput({
+      currentGuess: [],
+      currentGuessNumber: 1,
+      guesses: initialGuesses
+    });
+  }
+
+  // Checks the guess that was submitted and sets game state accordingly
+  function checkGameStatus(result) {
+    if (result.every(color => color === 'green')) {
+      setWonGame(true);
+      setGameOver(true);
+    } else if (gameTileStates.round === 5) {
+      setGameOver(true);
+    }
+  }
+  
   // Function is called when return/enter key pressed w/ 5 letters in the current guess. Returns array of green/yellow/grey strings to be delivered to game row tiles.
   function guessSubmit(guess, answer) {
     const result = []
@@ -56,14 +86,14 @@ function App() {
       newStates[prevValue.round] = result;
       console.log(newStates[prevValue.round]);
       const newRound = prevValue.round + 1;
+
+      checkGameStatus(result);
+
       return {
         tileStates: newStates,
         round: newRound
       }
     })
-
-    console.log(result);
-    console.log(unguessedLetters);
   }
 
   // Higher order function to handle updates to current input
@@ -111,13 +141,40 @@ function App() {
 
   // Call function based on keystroke
   function handleKeyDown(event) {
-    const { keyCode } = event;
-    if (keyCode >= 65 && keyCode <= 90) { // If letter
-      handleLetterInput(event.key.toUpperCase());
-    } else if (keyCode === 8) { // If backspace
-      handleBackspace();
-    } else if (keyCode === 13) { // If enter/return
-      handleEnter();
+    if (!gameOver) {
+      const { keyCode } = event;
+      if (keyCode >= 65 && keyCode <= 90) { // If letter
+        handleLetterInput(event.key.toUpperCase());
+      } else if (keyCode === 8) { // If backspace
+        handleBackspace();
+      } else if (keyCode === 13) { // If enter/return
+        handleEnter();
+      }
+    }
+  }
+
+  // Render a modal at the end of the game to give player feedback (win or lose/correct word)
+  function renderModal() {
+    if (wonGame) {
+      return (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Congratulations!</h2>
+            <p>You guessed the correct word!</p>
+            <button className="gameover-button" onClick={restartGame}>Play Again</button>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Game Over</h2>
+            <p>The correct word was: {answer}</p>
+            <button className="gameover-button" onClick={restartGame}>Play Again</button>
+          </div>
+        </div>
+      );
     }
   }
 
@@ -129,8 +186,11 @@ function App() {
 
   return (
     <div className="App">
-      <Header />
-      <Game currentInput={currentInput} gameTileStates={gameTileStates}/>
+      <div className="main-content">
+        <Header />
+        <Game currentInput={currentInput} gameTileStates={gameTileStates}/>
+        {gameOver && renderModal()}
+      </div>
     </div>
   );
 }
