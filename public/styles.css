@@ -61,7 +61,31 @@ header .button-box * {
 }
 
 /* Class Styling */
-.modal {
+.feedback-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 75%;
+  z-index: 2;
+}
+
+.feedback-modal-content {
+  background-color: var(--white-color);
+  color: black;
+  font-size: 0.8rem;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.feedback-modal-content p {
+  margin: 0;
+}
+
+.game-end-modal {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -73,7 +97,7 @@ header .button-box * {
   z-index: 2;
 }
 
-.modal-content {
+.game-end-modal-content {
   background-color: var(--primary-color);
   color: var(--white-color);
   padding: 20px;
@@ -108,7 +132,7 @@ header .button-box * {
 }
 
 .gameboard-container {
-  padding: 20px 0px;
+  padding: 40px 0px;
   display: flex;
   justify-content: center;
   align-items: center;

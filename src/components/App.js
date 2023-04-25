@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Game from "./Game";
-import { answers } from "../data";
+import { validGuesses, answers } from "../data";
 
 function App() {
   const initialGuesses = Array.from({ length: 6 }, () => []);
@@ -22,8 +22,13 @@ function App() {
   const [wonGame, setWonGame] = useState(false);
   const [gameOver, setGameOver] = useState(false);
 
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [showFeedback, setShowFeedback] = useState(false);
+
   // Set answer for game
   const answer = answers[0].toUpperCase();
+
+  const wordSet = new Set(validGuesses);
 
   // Restart the game
   function restartGame() {
@@ -129,13 +134,28 @@ function App() {
 
   // Submit guess on enter if valid 
   function handleEnter() {
+    const guessString = currentInput.currentGuess.join("")
     if (currentInput.currentGuess.length === 5) {
-      guessSubmit(currentInput.currentGuess, answer);
-      setCurrentInput((prevValue) => ({
-        ...prevValue,
-        currentGuess: [],
-        currentGuessNumber: prevValue.currentGuessNumber + 1
-      }));
+      if (wordSet.has(guessString.toLowerCase())) {
+        guessSubmit(currentInput.currentGuess, answer);
+        setCurrentInput((prevValue) => ({
+          ...prevValue,
+          currentGuess: [],
+          currentGuessNumber: prevValue.currentGuessNumber + 1
+        }));
+      } else {
+        setFeedbackMessage("Not in word list");
+        setShowFeedback(true);
+        setTimeout(() => {
+        setShowFeedback(false)
+        }, 2000);   
+      }
+    } else {
+      setFeedbackMessage("Not enough letters");
+        setShowFeedback(true);
+        setTimeout(() => {
+        setShowFeedback(false)
+        }, 2000);   
     }
   }
 
@@ -153,12 +173,24 @@ function App() {
     }
   }
 
+  // Render a modal if player attempts to submit a word that is not in the word list or is not 5 letters long
+  function renderFeedbackModal() {
+     
+    return (
+    <div className="feedback-modal">
+      <div className="feedback-modal-content">
+        <p>{feedbackMessage}</p>
+      </div>
+    </div>
+    )
+  }
+
   // Render a modal at the end of the game to give player feedback (win or lose/correct word)
-  function renderModal() {
+  function renderEndModal() {
     if (wonGame) {
       return (
-        <div className="modal">
-          <div className="modal-content">
+        <div className="game-end-modal">
+          <div className="game-end-modal-content">
             <h2>Congratulations!</h2>
             <p>You guessed the correct word!</p>
             <button className="gameover-button" onClick={restartGame}>Play Again</button>
@@ -167,8 +199,8 @@ function App() {
       );
     } else {
       return (
-        <div className="modal">
-          <div className="modal-content">
+        <div className="game-end-modal">
+          <div className="game-end-modal-content">
             <h2>Game Over</h2>
             <p>The correct word was: {answer}</p>
             <button className="gameover-button" onClick={restartGame}>Play Again</button>
@@ -189,7 +221,8 @@ function App() {
       <div className="main-content">
         <Header />
         <Game currentInput={currentInput} gameTileStates={gameTileStates}/>
-        {gameOver && renderModal()}
+        {gameOver && renderEndModal()}
+        {showFeedback && renderFeedbackModal()}
       </div>
     </div>
   );
