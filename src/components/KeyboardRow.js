@@ -1,5 +1,6 @@
 import React from "react";
 import KeyboardTile from "./KeyboardTile"
+import {v4 as uuidv4 } from "uuid";
 import { keyboardFirstRow, keyboardSecondRow, keyboardThirdTow } from "../data";
 import { keyboard } from "@testing-library/user-event/dist/keyboard";
 
@@ -12,7 +13,7 @@ function KeyboardRow(props) {
             //Generate a tile for each key in a row
         }
         {letters.map((letter) => (
-            <KeyboardTile key={letter.index} letter={letter}/>
+            <KeyboardTile key={uuidv4()} letter={letter} guessedLetters={props.guessedLetters}/>
         ))}
         
         </div>

@@ -2,14 +2,14 @@ import React from "react";
 import KeyboardRow from "./KeyboardRow";
 import { keyboardFirstRow, keyboardSecondRow, keyboardThirdTow } from "../data";
 
-function Keyboard() {
+function Keyboard(props) {
     
 
     return (
         <div className="keyboard-container">
-            <KeyboardRow letters={keyboardFirstRow}/>
-            <KeyboardRow letters={keyboardSecondRow}/>
-            <KeyboardRow letters={keyboardThirdTow}/>
+            <KeyboardRow guessedLetters={props.guessedLetters} letters={keyboardFirstRow}/>
+            <KeyboardRow guessedLetters={props.guessedLetters} letters={keyboardSecondRow}/>
+            <KeyboardRow guessedLetters={props.guessedLetters} letters={keyboardThirdTow}/>
         </div>
     )
 }

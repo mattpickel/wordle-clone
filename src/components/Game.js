@@ -6,7 +6,7 @@ function Game(props) {
     return (
         <div className="game-container">
             <GameBoard currentInput={props.currentInput} gameTileStates={props.gameTileStates}/>
-            <Keyboard />
+            <Keyboard guessedLetters={props.guessedLetters}/>
         </div>
     )
 }

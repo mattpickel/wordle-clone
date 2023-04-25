@@ -217,3 +217,7 @@ header .button-box * {
   flex: 1.5;
   font-size: 12px;
 }
+
+.guessed-letter {
+  background-color: var(--secondary-color);
+}

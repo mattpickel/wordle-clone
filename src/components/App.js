@@ -25,6 +25,8 @@ function App() {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [showFeedback, setShowFeedback] = useState(false);
 
+  const [guessedLetters, setGuessedLetters] = useState(new Set());
+
   // Set answer for game
   const answer = answers[0].toUpperCase();
 
@@ -44,6 +46,7 @@ function App() {
       currentGuessNumber: 1,
       guesses: initialGuesses
     });
+    setGuessedLetters(new Set());
   }
 
   // Checks the guess that was submitted and sets game state accordingly
@@ -84,12 +87,10 @@ function App() {
       }
     }
 
-    // Load results into Tile States Array
+    // Load results into Game Tile States Array
     setGameTileStates((prevValue) => {
-      console.log('test');
       var newStates = prevValue.tileStates;
       newStates[prevValue.round] = result;
-      console.log(newStates[prevValue.round]);
       const newRound = prevValue.round + 1;
 
       checkGameStatus(result);
@@ -99,6 +100,13 @@ function App() {
         round: newRound
       }
     })
+
+    // Add letters to list of already-guessed letters
+    for (let i = 0; i < 5; i++) {
+      if (!guessedLetters.has(guess[i])) {
+        setGuessedLetters(prevValue => new Set([...prevValue, guess[i]]))
+      } 
+    }
   }
 
   // Higher order function to handle updates to current input
@@ -220,7 +228,7 @@ function App() {
     <div className="App">
       <div className="main-content">
         <Header />
-        <Game currentInput={currentInput} gameTileStates={gameTileStates}/>
+        <Game currentInput={currentInput} gameTileStates={gameTileStates} guessedLetters={guessedLetters}/>
         {gameOver && renderEndModal()}
         {showFeedback && renderFeedbackModal()}
       </div>
