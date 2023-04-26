@@ -13,7 +13,7 @@ function KeyboardRow(props) {
             //Generate a tile for each key in a row
         }
         {letters.map((letter) => (
-            <KeyboardTile key={uuidv4()} letter={letter} guessedLetters={props.guessedLetters}/>
+            <KeyboardTile key={uuidv4()} letter={letter} guessedLetters={props.guessedLetters} handleLetterInput={props.handleLetterInput} handleEnter={props.handleEnter} handleBackspace={props.handleBackspace}/>
         ))}
         
         </div>

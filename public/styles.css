@@ -219,5 +219,5 @@ header .button-box * {
 }
 
 .guessed-letter {
-  background-color: var(--secondary-color);
+  background-color: --sec;
 }

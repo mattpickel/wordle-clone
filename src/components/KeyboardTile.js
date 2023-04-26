@@ -8,8 +8,19 @@ function KeyboardTile(props) {
     if (props.guessedLetters.has(props.letter.toUpperCase())) {
         className += " guessed-letter"
     }
+
+    function handleClick() {
+        if (props.letter === "ENTER") {
+            return (() => props.handleEnter());
+        } else if (props.letter === "DEL") {
+            return (() => props.handleBackspace());
+        } else {
+            return (() => props.handleLetterInput(props.letter.toUpperCase()));
+        }
+    }
+
     return (
-        <button className={className} type="button">
+        <button className={className} type="button" onClick={handleClick()}>
             {props.letter}
         </button>
     )

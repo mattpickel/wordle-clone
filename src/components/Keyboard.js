@@ -7,9 +7,9 @@ function Keyboard(props) {
 
     return (
         <div className="keyboard-container">
-            <KeyboardRow guessedLetters={props.guessedLetters} letters={keyboardFirstRow}/>
-            <KeyboardRow guessedLetters={props.guessedLetters} letters={keyboardSecondRow}/>
-            <KeyboardRow guessedLetters={props.guessedLetters} letters={keyboardThirdTow}/>
+            <KeyboardRow guessedLetters={props.guessedLetters} letters={keyboardFirstRow} handleLetterInput={props.handleLetterInput} handleEnter={props.handleEnter} handleBackspace={props.handleBackspace}/>
+            <KeyboardRow guessedLetters={props.guessedLetters} letters={keyboardSecondRow} handleLetterInput={props.handleLetterInput} handleEnter={props.handleEnter} handleBackspace={props.handleBackspace}/>
+            <KeyboardRow guessedLetters={props.guessedLetters} letters={keyboardThirdTow} handleLetterInput={props.handleLetterInput} handleEnter={props.handleEnter} handleBackspace={props.handleBackspace}/>
         </div>
     )
 }

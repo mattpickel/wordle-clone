@@ -228,7 +228,7 @@ function App() {
     <div className="App">
       <div className="main-content">
         <Header />
-        <Game currentInput={currentInput} gameTileStates={gameTileStates} guessedLetters={guessedLetters}/>
+        <Game currentInput={currentInput} gameTileStates={gameTileStates} guessedLetters={guessedLetters} handleLetterInput={handleLetterInput} handleEnter={handleEnter} handleBackspace={handleBackspace}/>
         {gameOver && renderEndModal()}
         {showFeedback && renderFeedbackModal()}
       </div>
