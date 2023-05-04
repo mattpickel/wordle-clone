@@ -14,7 +14,7 @@ function Header(props) {
             </div>
             <h1>Wordle</h1>
             <div className="button-box button-box-right">
-                <button>
+                <button onClick={props.handleHeaderClick}>
                     <HelpOutlineIcon />
                 </button>
                 <button>

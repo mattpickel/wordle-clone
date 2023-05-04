@@ -61,6 +61,21 @@ header .button-box * {
 }
 
 /* Class Styling */
+.gameover-button {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  border-radius: 4px;
+  border: 2px solid var(--secondary-color);
+  box-shadow: none;
+  font: inherit;
+  padding: 10px;
+}
+
+.gameover-button:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Modal Classes */
 .feedback-modal {
   display: flex;
   justify-content: center;
@@ -107,18 +122,42 @@ header .button-box * {
   text-align: center;
 }
 
-.gameover-button {
-  background-color: var(--primary-color);
-  color: var(--white-color);
-  border-radius: 4px;
-  border: 2px solid var(--secondary-color);
-  box-shadow: none;
-  font: inherit;
-  padding: 10px;
+.header-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
 }
 
-.gameover-button:hover {
-  background-color: var(--secondary-color);
+.header-modal-content {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid var(--secondary-color);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  line-break: normal;
+  width: 400px;
+}
+
+.header-modal-exit {
+  font-family: inherit;
+  border-radius: 4px;
+  border: none;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.exit-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 /* Game Board Classes */
@@ -187,6 +226,7 @@ header .button-box * {
 .keyboard-container {
   flex: 0 1 200px;
   margin: 0 8px;
+  padding: 30px 0;
 }
 
 .keyboard-row {
@@ -219,5 +259,5 @@ header .button-box * {
 }
 
 .guessed-letter {
-  background-color: --sec;
+  background-color: var(--secondary-color);
 }

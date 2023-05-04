@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header";
 import Game from "./Game";
+import HeaderModal from "./HeaderModal";
 import { validGuesses, answers } from "../data";
 
 function App() {
@@ -22,13 +23,18 @@ function App() {
   const [wonGame, setWonGame] = useState(false);
   const [gameOver, setGameOver] = useState(false);
 
+  const [roundsWon, setRoundsWon] = useState(0);
+  const [roundsPlayed, setRoundsPlayed] = useState(0);
+
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [showFeedback, setShowFeedback] = useState(false);
+
+  const [showHeaderModal, setShowHeaderModal] = useState(false);
 
   const [guessedLetters, setGuessedLetters] = useState(new Set());
 
   // Set answer for game
-  const answer = answers[0].toUpperCase();
+  const [answer, setAnswer] = useState(answers[Math.floor(Math.random()*answers.length)].toUpperCase());
 
   const wordSet = new Set(validGuesses);
 
@@ -47,6 +53,7 @@ function App() {
       guesses: initialGuesses
     });
     setGuessedLetters(new Set());
+    setAnswer(answers[Math.floor(Math.random()*answers.length)].toUpperCase());
   }
 
   // Checks the guess that was submitted and sets game state accordingly
@@ -54,8 +61,11 @@ function App() {
     if (result.every(color => color === 'green')) {
       setWonGame(true);
       setGameOver(true);
+      setRoundsWon(roundsWon + 1);
+      setRoundsPlayed(roundsPlayed + 1);
     } else if (gameTileStates.round === 5) {
       setGameOver(true);
+      setRoundsPlayed(roundsPlayed + 1);
     }
   }
   
@@ -181,7 +191,16 @@ function App() {
     }
   }
 
-  // Render a modal if player attempts to submit a word that is not in the word list or is not 5 letters long
+  // Render a modal if one of the header buttons are clicked
+  function handleHeaderClick() {
+    setShowHeaderModal(true);
+  }
+
+  function closeHeaderModal() {
+    setShowHeaderModal(false);
+  }
+
+  // Render a modal if player attempts to submit a word that is not in the word list or is not 5 letters long  
   function renderFeedbackModal() {
      
     return (
@@ -227,10 +246,11 @@ function App() {
   return (
     <div className="App">
       <div className="main-content">
-        <Header />
+        <Header handleHeaderClick={handleHeaderClick} />
         <Game currentInput={currentInput} gameTileStates={gameTileStates} guessedLetters={guessedLetters} handleLetterInput={handleLetterInput} handleEnter={handleEnter} handleBackspace={handleBackspace}/>
         {gameOver && renderEndModal()}
         {showFeedback && renderFeedbackModal()}
+        {showHeaderModal && <HeaderModal closeHeaderModal={closeHeaderModal}/>}
       </div>
     </div>
   );
