@@ -29,6 +29,7 @@ function App() {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [showFeedback, setShowFeedback] = useState(false);
 
+  const [headerModalType, setHeaderModalType] = useState("");
   const [showHeaderModal, setShowHeaderModal] = useState(false);
 
   const [guessedLetters, setGuessedLetters] = useState(new Set());
@@ -192,7 +193,15 @@ function App() {
   }
 
   // Render a modal if one of the header buttons are clicked
-  function handleHeaderClick() {
+  function handleHeaderClick(event) {
+    const { name } = event.currentTarget;
+    if (name === 'help') {
+      setHeaderModalType('help');
+    } else if (name === 'score') {
+      setHeaderModalType('score');
+    } else if (name === 'settings') {
+      setHeaderModalType('settings');
+    }
     setShowHeaderModal(true);
   }
 
@@ -250,7 +259,7 @@ function App() {
         <Game currentInput={currentInput} gameTileStates={gameTileStates} guessedLetters={guessedLetters} handleLetterInput={handleLetterInput} handleEnter={handleEnter} handleBackspace={handleBackspace}/>
         {gameOver && renderEndModal()}
         {showFeedback && renderFeedbackModal()}
-        {showHeaderModal && <HeaderModal closeHeaderModal={closeHeaderModal}/>}
+        {showHeaderModal && <HeaderModal type={headerModalType} closeHeaderModal={closeHeaderModal}/>}
       </div>
     </div>
   );

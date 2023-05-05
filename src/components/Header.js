@@ -14,13 +14,13 @@ function Header(props) {
             </div>
             <h1>Wordle</h1>
             <div className="button-box button-box-right">
-                <button onClick={props.handleHeaderClick}>
+                <button name="help" onClick={props.handleHeaderClick}>
                     <HelpOutlineIcon />
                 </button>
-                <button>
+                <button name="score" onClick={props.handleHeaderClick}>
                     <LeaderboardIcon />
                 </button>
-                <button>
+                <button name="settings" onClick={props.handleHeaderClick}>
                     <SettingsIcon />
                 </button>
             </div>
